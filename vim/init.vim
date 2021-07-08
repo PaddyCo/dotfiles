@@ -1,4 +1,4 @@
-" TODO: Auto-completion, LSP (coc?)
+" TODO: scratch?
 
 " Leader key settings
 let mapleader = " "
@@ -9,8 +9,17 @@ nmap <return> :noh<CR>
 set ignorecase
 set smartcase
 
+" No line wrap
+set nowrap
+
 " Show line numbers
 set number
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
 
 " Set terminal title
 set title
@@ -23,6 +32,12 @@ filetype plugin on
 " Show indentation, trailing spaces
 set listchars=tab:→\ ,trail:·,nbsp:·
 set list
+
+" Reducing updatetime
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
 
 " Set yank default target to system clipboard
 set clipboard+=unnamedplus
@@ -67,6 +82,10 @@ Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 
+" LSP
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-clangd']
+
 " Airline (Tabline and Statusline)
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -86,11 +105,14 @@ colorscheme dracula
 
 " - Find project
 execute 'source ' . expand("~/.dotfiles/vim/project-switcher.vim")
-nmap <leader>pp :call SwitchProject()
+nmap <leader>pp :call SwitchProject()<CR>
 
 " - Find files in current project
 nmap <leader><leader> :Files<CR>
 nmap <leader>sp :Ag<CR>
+
+" - Open scratchpad
+nmap <leader>x :split <bar> :wincmd j <bar> :e ~/.scratch<CR>
 
 " - Easymotion
 nmap <Leader>ss <Plug>(easymotion-overwin-f2)
@@ -144,3 +166,22 @@ endfunction
 nmap <leader>fD :call DeleteFile()<CR>
 nmap <leader>fR :Rename<SPACE>
 nmap <Leader>fe :e %:h/
+
+" - CoC
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <c-space> coc#refresh()
+nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>gy <Plug>(coc-type-definition)
+nmap <silent> <leader>gi <Plug>(coc-implementation)
+nmap <silent> <leader>gr <Plug>(coc-references)
+
