@@ -1,5 +1,3 @@
-" TODO: scratch?
-
 " Leader key settings
 let mapleader = " "
 set timeoutlen=1000
@@ -26,7 +24,7 @@ set title
 auto BufEnter * let &titlestring = fnamemodify(getcwd(), ":t") . " (nvim)"
 
 " Enable filetype plugin
-:filetype on
+filetype on
 filetype plugin on
 
 " Show indentation, trailing spaces
@@ -82,14 +80,17 @@ Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 
-" LSP
+" LSP (CoC)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-clangd']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-eslint', 'coc-clangd', 'coc-rust-analyzer', 'coc-python', 'coc-lua']
 
 " Airline (Tabline and Statusline)
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
+
+" CA65 syntax 
+Plug 'maxbane/vim-asm_ca65'
 
 " Theme
 Plug 'dracula/vim', { 'as': 'dracula' }
@@ -106,6 +107,9 @@ colorscheme dracula
 " - Find project
 execute 'source ' . expand("~/.dotfiles/vim/project-switcher.vim")
 nmap <leader>pp :call SwitchProject()<CR>
+
+" - Build
+nmap <leader>bm make
 
 " - Find files in current project
 nmap <leader><leader> :Files<CR>
@@ -184,4 +188,9 @@ nmap <silent> <leader>gd <Plug>(coc-definition)
 nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
+nmap <silent> <leader>rr <Plug>(coc-rename)
 
+" - CA65 Assembler
+augroup filetypedetect
+    au BufNewFile,BufRead *.s,*.inc set ft=asm_ca65
+augroup END
