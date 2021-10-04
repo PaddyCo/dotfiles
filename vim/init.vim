@@ -38,7 +38,7 @@ set updatetime=300
 set shortmess+=c
 
 " Set yank default target to system clipboard
-set clipboard+=unnamedplus
+set clipboard^=unnamed,unnamedplus
 
 " Automatically create folder for file
 autocmd BufWritePre * :Mkdir!
@@ -82,7 +82,7 @@ let g:EasyMotion_smartcase = 1
 
 " LSP (CoC)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-eslint', 'coc-clangd', 'coc-rust-analyzer', 'coc-python', 'coc-lua']
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-eslint', 'coc-clangd', 'coc-rust-analyzer', 'coc-python', 'coc-lua', 'coc-phpls']
 
 " Airline (Tabline and Statusline)
 Plug 'vim-airline/vim-airline'
@@ -94,6 +94,9 @@ Plug 'maxbane/vim-asm_ca65'
 
 " Theme
 Plug 'dracula/vim', { 'as': 'dracula' }
+
+" Visual stuff
+Plug 'kyazdani42/nvim-web-devicons'
 
 call plug#end()
 
