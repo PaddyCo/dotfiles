@@ -69,6 +69,11 @@ Plug 'tpope/vim-sleuth'
 let g:sleuth_automatic = 1
 Plug 'editorconfig/editorconfig-vim'
 
+" Telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
 " File operations
 Plug 'tpope/vim-eunuch'
 
@@ -115,8 +120,8 @@ nmap <leader>pp :call SwitchProject()<CR>
 nmap <leader>bm make
 
 " - Find files in current project
-nmap <leader><leader> :Files<CR>
-nmap <leader>sp :Ag<CR>
+nmap <leader><leader> :Telescope find_files<CR>
+nmap <leader>sp :Telescope live_grep<CR>
 
 " - Open scratchpad
 nmap <leader>x :split <bar> :wincmd j <bar> :e ~/.scratch<CR>
