@@ -6,6 +6,9 @@ vim.api.nvim_set_option('timeoutlen', 1000)
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+-- Preview results from substitute and other actions
+vim.opt.inccommand = "nosplit"
+
 -- No line wrap
 vim.g.nowrap = true
 

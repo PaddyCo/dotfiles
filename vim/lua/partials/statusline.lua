@@ -1,3 +1,4 @@
+-- TODO: shorten long branchnames
 -- TODO: fg color for lualine c
 local diagnostics = {
     'diagnostics',

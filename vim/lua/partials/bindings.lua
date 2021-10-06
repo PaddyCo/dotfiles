@@ -18,6 +18,15 @@ utils.keymap('n', '<leader>fe', ':e %:h/', { silent = false })
 utils.keymap('n', '<leader><leader>', ':Telescope find_files<CR>')
 utils.keymap('n', '<leader>sp', ':Telescope live_grep<CR>')
 
+-- Quickfix
+-- TODO: if in quickfix window, make it so <CR> takes you to hovered error (:.cc)
+utils.keymap('n', '<leader>qq', ':copen<CR>') -- TODO: make this toggle it
+utils.keymap('n', '<leader>qn', ':cn<CR>')
+utils.keymap('n', '<leader>qp', ':cp<CR>')
+
+-- Tree
+utils.keymap('n', '<leader>op', ':NvimTreeToggle<CR>')
+
 -- Buffers
 utils.keymap('n', '<leader>bb', ':Telescope buffers<CR>')
 utils.keymap('n', '<leader>bn', ':bnext<CR>')

@@ -1,3 +1,4 @@
+-- TODO: VIM pencil for markdown etc
 require('packer').startup{
     function()
 	use 'lewis6991/impatient.nvim'
@@ -33,6 +34,13 @@ require('packer').startup{
 	-- LSP
 	use 'neovim/nvim-lspconfig'
 	use 'glepnir/lspsaga.nvim'
+
+	-- nvim-tree
+	use {
+	    'kyazdani42/nvim-tree.lua',
+	    requires = 'kyazdani42/nvim-web-devicons',
+	    config = function() require'nvim-tree'.setup {} end
+	}
 
 	-- Statusline
 	use {
