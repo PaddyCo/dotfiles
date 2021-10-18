@@ -3,8 +3,8 @@ require('packer').startup{
     function()
 	use 'lewis6991/impatient.nvim'
 	use {
-	    'nvim-treesitter/nvim-treesitter',
-	    run = ':TSUpdate'
+		'nvim-treesitter/nvim-treesitter',
+		run = ':TSUpdate'
 	}
 
 	-- Git
@@ -20,26 +20,34 @@ require('packer').startup{
 	-- Telescope
 	use 'nvim-lua/plenary.nvim'
 	use {
-	    'nvim-telescope/telescope.nvim',
-	    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+		'nvim-telescope/telescope.nvim',
+		requires = {'kyazdani42/nvim-web-devicons', opt = true}
 	}
 	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
 	-- File operations
-	use { 'tpope/vim-eunuch', cmd = {'Delete', 'Unlink', 'Remove', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Mkdir!'} }
+	use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Unlink', 'Remove', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Mkdir!'}}
 
 	-- Text operations
 	use 'tpope/vim-surround'
 
+	-- Writing
+	use {'reedes/vim-pencil'}
+
 	-- LSP
 	use 'neovim/nvim-lspconfig'
 	use 'glepnir/lspsaga.nvim'
+	use {
+		'folke/trouble.nvim',
+		requires = 'kyazdani42/nvim-web-devicons',
+		config = function() require("trouble").setup {} end
+	}
 
 	-- nvim-tree
 	use {
 	    'kyazdani42/nvim-tree.lua',
 	    requires = 'kyazdani42/nvim-web-devicons',
-	    config = function() require'nvim-tree'.setup {} end
+	    config = function() require'nvim-tree'.setup({}) end
 	}
 
 	-- Statusline
@@ -51,11 +59,7 @@ require('packer').startup{
 	-- Theme
 	use 'ayu-theme/ayu-vim'
 	use 'folke/lsp-colors.nvim'
-    end,
-    config = {
-	-- Move to lua dir so impatient.nvim can cache it
-	compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua'
-    }
+    end
 }
 
 -- Telescope
@@ -70,3 +74,10 @@ require("telescope").setup({
     },
 })
 
+vim.api.nvim_exec([[
+    augroup pencil
+      autocmd!
+      autocmd FileType markdown,mkd call pencil#init()
+      autocmd FileType text         call pencil#init()
+    augroup END
+]], false)

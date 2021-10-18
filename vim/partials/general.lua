@@ -10,7 +10,7 @@ vim.o.smartcase = true
 vim.opt.inccommand = "nosplit"
 
 -- No line wrap
-vim.g.nowrap = true
+vim.o.wrap = false
 
 -- Line numbers
 vim.o.number = true
@@ -36,3 +36,6 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
 
+
+-- HBS
+vim.api.nvim_command([[ au BufRead,BufNewFile *.handlebars,*.hbs set ft=html ]])

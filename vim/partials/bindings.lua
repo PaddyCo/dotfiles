@@ -43,6 +43,9 @@ utils.keymap('n', '<leader>t.', '<cmd>terminal<CR>')
 utils.keymap('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
 utils.keymap('n', '<leader>gr', '<cmd>Telescope lsp_references<CR>')
 utils.keymap('n', '<leader>rr', '<cmd>lua vim.lsp.buf.rename()<CR>')
+utils.keymap('n', '<leader>tt', '<cmd>TroubleToggle lsp_document_diagnostics<CR>')
+utils.keymap('n', '<leader>tw', '<cmd>TroubleToggle lsp_workspace_diagnostics<CR>')
+utils.keymap('n', '<leader>tq', '<cmd>TroubleToggle quickfix<CR>')
 
 -- Tabs
 utils.keymap('n', '<leader><tab>n', '<cmd>$tabnew<CR>')

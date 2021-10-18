@@ -1,4 +1,6 @@
 _G.paddyco = {}
+local utils = require'partials/utils'
+
 -- Install packer if not already installed
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -7,7 +9,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd 'packadd packer.nvim'
 end
 
-require('impatient')
 require'partials/general'
 require'partials/plugins'
 require'partials/theme'
