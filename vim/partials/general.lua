@@ -36,6 +36,10 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
 
+-- Hover
+vim.api.nvim_command([[
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false})
+]])
 
 -- HBS
 vim.api.nvim_command([[ au BufRead,BufNewFile *.handlebars,*.hbs set ft=html ]])

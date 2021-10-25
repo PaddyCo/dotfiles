@@ -1,64 +1,114 @@
 -- TODO: VIM pencil for markdown etc
 require('packer').startup{
     function()
-	use 'lewis6991/impatient.nvim'
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = ':TSUpdate'
-	}
+    use 'lewis6991/impatient.nvim'
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    }
 
-	-- Git
-	use 'tpope/vim-fugitive'
+    -- Git
+    use 'tpope/vim-fugitive'
 
-	-- Tab detection
-	use 'tpope/vim-sleuth'
-	vim.g.sleuth_automatic = 1
+    -- Tab detection
+    use 'tpope/vim-sleuth'
+    vim.g.sleuth_automatic = 1
 
-	-- Editor cofnig
-	use 'editorconfig/editorconfig-vim'
+    -- Editor cofnig
+    use 'editorconfig/editorconfig-vim'
 
-	-- Telescope
-	use 'nvim-lua/plenary.nvim'
-	use {
-		'nvim-telescope/telescope.nvim',
-		requires = {'kyazdani42/nvim-web-devicons', opt = true}
-	}
-	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    -- Telescope
+    use 'nvim-lua/plenary.nvim'
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    }
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
-	-- File operations
-	use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Unlink', 'Remove', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Mkdir!'}}
+    -- File operations
+    use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Unlink', 'Remove', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Mkdir!'}}
 
-	-- Text operations
-	use 'tpope/vim-surround'
+    -- Text operations
+    use 'tpope/vim-surround'
 
-	-- Writing
-	use {'reedes/vim-pencil'}
+    -- Writing
+    use {'reedes/vim-pencil'}
 
-	-- LSP
-	use 'neovim/nvim-lspconfig'
-	use 'glepnir/lspsaga.nvim'
-	use {
-		'folke/trouble.nvim',
-		requires = 'kyazdani42/nvim-web-devicons',
-		config = function() require("trouble").setup {} end
-	}
+    -- LSP
+    use 'neovim/nvim-lspconfig'
+    use {
+        'folke/trouble.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function() require("trouble").setup {} end
+    }
 
-	-- nvim-tree
-	use {
-	    'kyazdani42/nvim-tree.lua',
-	    requires = 'kyazdani42/nvim-web-devicons',
-	    config = function() require'nvim-tree'.setup({}) end
-	}
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = { 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-calc', 'hrsh7th/cmp-path' },
+        config = function()
+            local cmp = require('cmp')
+            cmp.setup({
+                snippet = {
+                    expand = function(args)
+                        -- For `vsnip` user.
+                        -- vim.fn["vsnip#anonymous"](args.body)
 
-	-- Statusline
-	use {
-	    'hoob3rt/lualine.nvim',
-	    requires = {'kyazdani42/nvim-web-devicons', opt = true}
-	}
+                        -- For `luasnip` user.
+                        -- require('luasnip').lsp_expand(args.body)
 
-	-- Theme
-	use 'ayu-theme/ayu-vim'
-	use 'folke/lsp-colors.nvim'
+                        -- For `ultisnips` user.
+                        -- vim.fn["UltiSnips#Anon"](args.body)
+                    end,
+                },
+                mapping = {
+                    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-e>'] = cmp.mapping.close(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                },
+                sources = {
+                    { name = 'nvim_lsp' },
+
+                    -- For vsnip user.
+                    -- { name = 'vsnip' },
+
+                    -- For luasnip user.
+                    -- { name = 'luasnip' },
+
+                    -- For ultisnips user.
+                    -- { name = 'ultisnips' },
+
+                    { name = 'buffer' },
+
+                    { name = 'path' },
+
+                    { name = 'calc' },
+                }
+            })
+        end
+    }
+
+    -- nvim-tree
+    use {
+        'kyazdani42/nvim-tree.lua',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function() 
+        require'nvim-tree'.setup {
+            auto_resize = true,
+        }
+        end
+    }
+
+    -- Statusline
+    use {
+        'hoob3rt/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    }
+
+    -- Theme
+    use 'ayu-theme/ayu-vim'
+    use 'folke/lsp-colors.nvim'
     end
 }
 
@@ -66,18 +116,18 @@ require('packer').startup{
 local actions = require("telescope.actions")
 require("telescope").setup({
     defaults = {
-	mappings = {
-	    i = {
-		["<esc>"] = actions.close, -- Make it so single ESC closes window
-	    },
-	},
+    mappings = {
+        i = {
+        ["<esc>"] = actions.close, -- Make it so single ESC closes window
+        },
+    },
     },
 })
 
 vim.api.nvim_exec([[
-    augroup pencil
-      autocmd!
-      autocmd FileType markdown,mkd call pencil#init()
-      autocmd FileType text         call pencil#init()
-    augroup END
+augroup pencil
+autocmd!
+autocmd FileType markdown,mkd call pencil#init()
+autocmd FileType text         call pencil#init()
+augroup END
 ]], false)
