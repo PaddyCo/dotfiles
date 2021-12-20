@@ -16,4 +16,4 @@ require'partials/lsp'
 require'partials/terminal'
 require'partials/bindings'
 require'partials/statusline'
-
+require'partials/notes'

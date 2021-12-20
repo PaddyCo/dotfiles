@@ -24,6 +24,7 @@ require('packer').startup{
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    use { 'ElPiloto/telescope-vimwiki.nvim' }
 
     -- File operations
     use {'tpope/vim-eunuch', opt = true, cmd = {'Delete', 'Unlink', 'Remove', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Mkdir!'}}
@@ -33,6 +34,34 @@ require('packer').startup{
 
     -- Writing
     use {'reedes/vim-pencil'}
+    use {
+        'vimwiki/vimwiki',
+        config = function()
+            vim.g.vimwiki_list = {
+                {
+                    path = '/mnt/c/Users/Patrik/Dropbox/Notes/Personal',
+                    syntax = 'markdown', 
+                    ext = '.md',
+                    path_html = '/mnt/c/Users/Patrik/Dropbox/Notes/Personal_html',
+                    custom_wiki2html = '~/.dotfiles/vim/scripts/wiki2html.sh'
+                },
+                {
+                    path = '/mnt/c/Users/Patrik/Dropbox/Notes/Work',
+                    syntax = 'markdown', 
+                    ext = '.md',
+                    path_html = '/mnt/c/Users/Patrik/Dropbox/Notes/Work_html',
+                    custom_wiki2html = '~/.dotfiles/vim/scripts/wiki2html.sh'
+                },
+                {
+                    path = '/mnt/c/Users/Patrik/Dropbox/Notes/La-mulana',
+                    syntax = 'markdown', 
+                    ext = '.md',
+                    path_html = '/mnt/c/Users/Patrik/Dropbox/Notes/La-mulana_html',
+                    custom_wiki2html = '~/.dotfiles/vim/scripts/wiki2html.sh'
+                }
+            }
+        end
+    }
 
     -- LSP
     use 'neovim/nvim-lspconfig'
@@ -109,6 +138,7 @@ require('packer').startup{
     -- Theme
     use 'ayu-theme/ayu-vim'
     use 'folke/lsp-colors.nvim'
+    use 'chriskempson/base16-vim'
     end
 }
 
@@ -123,11 +153,13 @@ require("telescope").setup({
     },
     },
 })
+require("telescope").load_extension('vimwiki')
 
 vim.api.nvim_exec([[
 augroup pencil
 autocmd!
 autocmd FileType markdown,mkd call pencil#init()
 autocmd FileType text         call pencil#init()
+let g:pencil#autoformat = 0
 augroup END
 ]], false)

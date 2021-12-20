@@ -1,5 +1,5 @@
 -- Language servers
--- See https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md for supported language servers
+-- See https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md for supported language servers
 
 -- Rust
 require'lspconfig'.rls.setup{
@@ -10,3 +10,5 @@ require'lspconfig'.rls.setup{
 require'lspconfig'.tsserver.setup{
     capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
+require'lspconfig'.eslint.setup{}
+

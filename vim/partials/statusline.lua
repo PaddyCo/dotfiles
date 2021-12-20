@@ -2,7 +2,7 @@
 -- TODO: fg color for lualine c
 local diagnostics = {
     'diagnostics',
-    sources = { "nvim_lsp" },
+    sources = { "nvim_diagnostic" },
     color_error = "#FF3333",
     color_warn = "#FFD94D",
     color_info = "#5C76FF",
@@ -20,7 +20,7 @@ require'lualine'.setup {
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch'},
-    lualine_c = {'filename'},
+    lualine_c = {{ 'filename', path = 1 }},
     lualine_x = {'encoding'},
     lualine_y = { diagnostics, 'filetype'},
     lualine_z = {'location', 'progress'}

@@ -18,6 +18,11 @@ utils.keymap('n', '<leader>fe', ':e %:h/', { silent = false })
 utils.keymap('n', '<leader><leader>', ':Telescope find_files<CR>')
 utils.keymap('n', '<leader>sp', ':Telescope live_grep<CR>')
 
+-- Notes
+utils.keymap('n', '<leader>nn', ':Telescope vimwiki<CR>')
+utils.keymap('n', '<leader>ns', ':Telescope vimwiki live_grep<CR>')
+
+
 -- Quickfix
 -- TODO: if in quickfix window, make it so <CR> takes you to hovered error (:.cc)
 utils.keymap('n', '<leader>qq', ':copen<CR>') -- TODO: make this toggle it
